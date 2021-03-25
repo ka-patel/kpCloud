@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_USERS\.DEFAULT\Control Panel\TimeDate\AdditionalClocks]
+
+[HKEY_USERS\.DEFAULT\Control Panel\TimeDate\AdditionalClocks\1]
+"Enable"=dword:00000001
+"DisplayName"="UTC"
+"TzRegKeyName"="UTC"
+
+[HKEY_CURRENT_USER\Control Panel\TimeDate\AdditionalClocks]
+
+[HKEY_CURRENT_USER\Control Panel\TimeDate\AdditionalClocks\1]
+"Enable"=dword:00000001
+"DisplayName"="UTC"
+"TzRegKeyName"="UTC"
+

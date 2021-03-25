@@ -1,0 +1,31 @@
+#!ipxe
+
+# dhcp net0
+
+set OSSRC http://kpCloud-ks/os/src/${OS}
+set KS http://kpCloud-ks/ks/${OS}
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+
+prompt -k 0x197e -t 2000 Press F12 to install ${OS} ... || exit
+
+# Call wimboot to create a virtual WIM file system in memory
+#  For details see https://ipxe.org/appnote/wimboot_architecture
+kernel http://kpCloud-ks/pxe/wimboot-1.0.3/wimboot gui
+
+# Map in boot configuration data (BCD) into virtual WIM fs
+initrd ${OSSRC}/boot/bootmgr.exe bootmgr.exe
+initrd ${OSSRC}/boot/BCD         BCD
+initrd ${OSSRC}/boot/boot.sdi    boot.sdi
+
+# Populate the initial virtual WIM fs contents with that in WinPE 
+initrd ${OSSRC}/sources/boot.wim   boot.wim
+
+# Map in fonts needed to display start of WinPE boot up process in GUI
+initrd ${OSSRC}/boot/fonts/segmono_boot.ttf  segmono_boot.ttf
+initrd ${OSSRC}/boot/fonts/segoe_slboot.ttf  segoe_slboot.ttf
+initrd ${OSSRC}/boot/fonts/segoen_slboot.ttf segoen_slboot.ttf
+initrd ${OSSRC}/boot/fonts/wgl4_boot.ttf     wgl4_boot.ttf
+
+imgstat
+boot

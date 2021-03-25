@@ -1,0 +1,21 @@
+    MENU TITLE Fixes Menu
+    
+    LABEL Main Menu
+      MENU LABEL ^Return to Main Menu
+      KERNEL modules/menu.c32
+      APPEND pxelinux.cfg/default
+    
+    label fsck
+      menu label ^File system check
+      kernel TRK/kernel.trk
+      append initrd=TRK/chkdsk.trk ramdisk_size=32768 root=/dev/ram0 vga=0
+    
+    label memtest
+      menu label ^Memory Test: Memtest86+ v1.65
+      kernel Memtest/memtest.x86
+    
+    label trk3
+      menu label ^Trinity Rescue Kit
+      kernel TRK/kernel.trk
+      append initrd=TRK/initrd.trk ramdisk_size=32768 root=/dev/ram0 vga=0 trknfs=IPADDR:/trk ip=::::::dhcp splash=verbose
+

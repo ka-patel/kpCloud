@@ -1,0 +1,16 @@
+#!ipxe
+
+# dhcp net0
+  
+set OSSRC http://kpCloud-ks/os/src/${OS}
+set KS http://kpCloud-ks/ks/${OS}
+
+cpuid --ext 29 && set arch amd64 || set arch x86
+
+prompt -k 0x197e -t 2000 Press F12 to install ${OS} ... || exit
+
+kernel ${OSSRC}/images/pxeboot/vmlinuz initrd=initrd.img sshd=1 kssendmac ks=${KS}/cfg/kp-dev.ks ksdevice=eth0
+initrd ${OSSRC}/images/pxeboot/initrd.img
+  
+imgstat
+boot

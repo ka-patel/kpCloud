@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_USERS\.DEFAULT\Software\VMware, Inc.\VMware Tools]
+"ShowTray"=dword:00000001
+@=dword:00000001
+
+[HKEY_CURRENT_USER\Software\VMware, Inc.\VMware Tools]
+"ShowTray"=dword:00000001
+@=dword:00000001
+
+

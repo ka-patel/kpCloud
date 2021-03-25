@@ -1,0 +1,142 @@
+# See :
+#  http://moni-tutorial.de/index.php#251
+#  http://www.rmprepusb.com/tutorials/72---easyboot---a-grubdos-multiboot-drive-that-is-easy-to-maintain#TOC-List-of-tested-ISO-files-for-use-with-AutoLinux-menu
+
+# Booting a CDROM using grub
+# LABEL cdrom
+# kernel http://192.168.100.254/grub.exe
+# initrd http://192.168.100.254/hiren10.iso
+# APPEND --config-file="map (rd)+1 (0xff); map --hook; chainloader (0xff)"
+
+timeout 100
+default modules/menu.c32
+
+LABEL ipxeLinuxKernel
+  MENU LABEL iPXE Linux Kernal
+  KERNEL ipxe.lkrn
+
+LABEL LocalDisk
+  MENU LABEL Local Disk
+  KERNEL modules/chain.c32
+  APPEND hd0 0
+
+LABEL cold_reboot
+  MENU LABEL Cold Reboot
+  COM32 modules/reboot.c32
+
+LABEL warm_reboot
+  MENU LABEL Warm Reboot
+  COM32 modules/reboot.c32
+  APPEND --warm
+
+# LABEL Kickstart-6.3
+#   MENU LABEL Kickstart Centos/6.3/279 (64-bit)
+#   KERNEL http://kpCloud-ks/os/src/CentOS/6.3/279/isolinux/vmlinuz
+#   APPEND sshd=1 kssendmac initrd=http://kpCloud-ks/os/src/CentOS/6.3/279/isolinux/initrd.img ks=http://kpCloud-ks/ks/CentOS/6.3/279/cfg/kp-dev.ks ksdevice=eth0
+
+LABEL Kickstart-6.3
+  MENU LABEL Kickstart Centos/6.3/279 (64-bit) 
+  KERNEL modules/ipxe.krn dhcp && OS=CentOS/6.3/279 && chain http://kpCloud-ks/ks/helper/boot/CentOS.ipxe
+
+LABEL Windows-2008DC
+  MENU LABEL Kickstart Windows 2008 DC
+  KERNEL modules/ipxe.krn dhcp && OS=Windows/2008/DC && chain http://kpCloud-ks/ks/helper/boot/WinPE.ipxe
+
+
+
+
+
+
+
+
+
+
+# For examples only!
+
+LABEL Kickstart-Redhat6.1
+  MENU LABEL Kickstart Redhat/6.1/131 (64-bit)
+  KERNEL http://kpCloud-ks/os/src/Redhat/6.1/131/isolinux/vmlinuz
+  APPEND sshd=1 kssendmac initrd=http://kpCloud-ks/os/src/Redhat/6.1/131/isolinux/initrd.img ks=http://kpCloud-ks/ks/Redhat/6.1/131/cfg/kp-dev.ks ksdevice=eth0
+
+LABEL Kickstart-Redhat6.5
+  MENU LABEL Kickstart Redhat/6.5/431 (64-bit)
+  KERNEL http://kpCloud-ks/os/src/Redhat/6.5/431/isolinux/vmlinuz
+  APPEND sshd=1 kssendmac initrd=http://kpCloud-ks/os/src/Redhat/6.5/431/isolinux/initrd.img ks=http://kpCloud-ks/ks/Redhat/6.5/431/cfg/kp-dev.ks ksdevice=eth0
+
+# see http://www.syslinux.org/wiki/index.php/MEMDISK
+LABEL CentOS-6.4-x86_64-LiveDVD
+  MENU LABEL CentOS-6.4-x86_64-LiveDVD.iso intractive install
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/CentOS/CentOS-6.4-x86_64-LiveDVD.iso
+  APPEND iso bigraw
+
+LABEL rhel-server-6.5-x86_64-dvd.iso
+  MENU LABEL rhel-server-6.5-x86_64-dvd.iso intractive install
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Redhat/rhel-server-6.5-x86_64-dvd.iso
+  APPEND iso bigraw
+
+LABEL winpe
+  MENU LABEL Windows PE
+  KERNEL http://kpCloud-ks/pxe/Boot/WinPE.0
+
+LABEL winpe2
+  MENU LABEL Windows PE (ISO image)
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/WinPE/winpe.iso
+  APPEND iso bigraw
+
+LABEL Windows 7 Recovery CD (64 bits)
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/Windows-Tweaks.info_Windows_7_64-bit_Recovery-CD.iso
+  APPEND iso
+
+LABEL Solaris-10-U8 
+  MENU LABEL Solaris 10 Update 8
+  KERNEL http://kpCloud-ks/os/Solaris/10/U8/grub/pxegrub.0
+
+LABEL grub4dos
+  MENU LABEL grub4dos
+  KERNEL http://kpCloud-ks/grub4dos-0.4.4/grub.exe
+  APPEND keeppxe 
+
+LABEL netboot.me ISO
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/netbootme.iso
+  APPEND iso
+
+LABEL dban-2.2.7_i586.iso
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/dban-2.2.7_i586.iso
+  APPEND iso
+
+LABEL pmagic_2013_08_09_UNSTABLE.iso
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/pmagic_2013_08_09_UNSTABLE.iso
+  APPEND iso
+
+LABEL hdt-0.5.2
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/hdt-0.5.2.iso
+  APPEND iso
+
+LABEL ubcd524
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/ubcd524.iso
+  APPEND iso raw
+
+LABEL gparted-live-0.16.1-1-i486
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/gparted-live-0.16.1-1-i486.iso
+  APPEND iso raw
+
+LABEL UBCD4WinBuilder
+  KERNEL modules/memdisk
+  INITRD http://kpCloud-ks/os/iso/Utilities/UBCD4WinBuilder.iso
+  APPEND raw iso
+
+LABEL PXE
+  LINUX modules/memdisk
+  INITRD http://kpCloud-ks/pxe/modules/pxelinux.0
+  APPEND raw
+

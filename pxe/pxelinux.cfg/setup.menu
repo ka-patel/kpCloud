@@ -1,0 +1,32 @@
+    MENU TITLE Setup Menu
+    
+    LABEL Main Menu
+      MENU LABEL ^Return to Main Menu
+      KERNEL modules/menu.c32
+      APPEND pxelinux.cfg/default
+    
+    label setupkb
+      menu label ^Any floppy disk image
+      kernel modules/memdisk
+      append initrd=Floppy/kbfloppy.img
+    
+    label linux
+      MENU PASSWD yourpassword
+      menu label Install - ^Classic
+      kernel Suse/linux92
+      append initrd=Suse/initrd92 ramdisk_size=65536 vga=0 textmode=1 install=http://IPADDR serverdir=/9.2/install
+autoyast=http://IPADDR/9.2/scripts/ay92.xml
+    
+    label trkclone
+      MENU PASSWD yourpassword
+      menu label Install - ^Faster
+      kernel TRK/kernel.trk
+      append initrd=TRK/initrd.trk ramdisk_size=65536 root=/dev/ram0 vga=0 install=Y trknfs=IPADDR:/trk
+ip=::::::dhcp splash=verbose
+    
+    label linuxfull
+      MENU PASSWD yourpassword
+      menu label Install - ^Developer
+      kernel Suse/linux92
+      append initrd=Suse/initrd92 ramdisk_size=65536 vga=0 textmode=1 install=http://IPADDR serverdir=/9.2/install 
+autoyast=http://IPADDR/9.2/scripts/develdesktop.xml

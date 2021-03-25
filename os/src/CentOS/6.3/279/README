@@ -1,0 +1,16 @@
+#-##
+#-## 
+#-## Mount the ISO image of CentOS/6.3/279 here. Use following commands to expose the contents of the ISO image:
+#-##
+#-##  At Linux command line: 
+#-##      mount -o loop -t iso9660 /home/kickstart/os/iso/<iso_name>.iso /home/kickstart/os/src/CentOS/6.3/279
+#-##
+#-##      OR
+#-##
+#-##  add following stanza into /etc/fstab followed by 'mount -a' in order to survice reboots as well:
+#-##      /home/kickstart/os/iso/CentOS/<iso_name>.iso	/home/kickstart/os/src/CentOS/6.3/279	iso9660	loop	0 0
+#-##
+#-##
+#-##  If any one of the choice is selected then this file will get hidden by that mount command until it is unmount.
+#-##
+#-##

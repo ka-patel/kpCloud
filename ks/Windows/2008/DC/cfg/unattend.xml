@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <!--
+          Notes:
+          See http://technet.microsoft.com/en-us/library/cc766485%28v=ws.10%29.aspx for more details 
+          See http://technet.microsoft.com/en-us/library/cc766271%28v=ws.10%29.aspx
+    -->
+    <servicing>
+        <!-- We make these component removable, hence permanence="removable" -->
+        <package action="configure" permanence="removable">
+            <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="" />
+            <selection name="CoreFileServer" state="true" />
+            <selection name="DirectoryServices-AdministrativeCenter" state="true" />
+            <selection name="RemoteAssistance" state="true" />
+            <selection name="SNMP" state="true" />
+            <selection name="WMISnmpProvider" state="true" />
+            <selection name="SUA" state="true" />
+            <selection name="TFTP" state="true" />
+            <selection name="NetworkLoadBalancingManagementClient" state="true" />
+            <selection name="NetworkLoadBalancingFullServer" state="true" />
+            <selection name="DesktopExperience" state="true" />
+            <selection name="InkSupport" state="true" />
+            <selection name="StorageManagerForSANs" state="true" />
+            <selection name="MultipathIo" state="true" />
+            <selection name="TIFFIFilter" state="true" />
+            <selection name="WindowsRecoveryDisc" state="true" />
+            <selection name="WindowsServerBackupCommandlet" state="true" />
+            <selection name="WindowsServerBackup" state="true" />
+            <selection name="WSRM" state="true" />
+            <selection name="Xps-Foundation-Xps-Viewer" state="true" />
+            <selection name="MicrosoftWindowsPowerShellISE" state="true" />
+            <selection name="NetFx3" state="true" />
+            <selection name="TelnetClient" state="true" />
+        </package>
+    </servicing>
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+            <LogPath>x:\Windows\TEMP\kpCloud\WinPE\Microsoft-Windows-Setup</LogPath>
+            <RunAsynchronous>
+               <RunAsynchronousCommand>
+                  <Order>1</Order>
+                  <Path>cmd /c "echo Running kpCloud's unattended install of Windows 2008 R2 DataCenter Edition. &amp; set /P bogus=Please be patient and wait ... "</Path>
+                  <Description>kpCloud Build Message</Description>
+               </RunAsynchronousCommand>
+            </RunAsynchronous>
+            <ImageInstall>
+                <OSImage>
+                    <WillShowUI>OnError</WillShowUI>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>1</PartitionID>
+                    </InstallTo>
+                    <InstallFrom>
+                        <Path>Install.wim</Path>
+                        <MetaData>
+                            <Key>/image/index</Key>
+                            <!-- 1 - ServerStandard
+                                 2 - ServerStandardCore
+                                 3 - ServerEnterprise
+                                 4 - ServerEnterpriseCore
+                                 5 - ServerDataCenter
+                                 6 - ServerDataCenterCore
+                                 7 - ServerWeb
+                                 8 - ServerWebCore
+                            -->
+                            <Value>5</Value>
+                        </MetaData>
+                    </InstallFrom>
+                    <InstallToAvailablePartition>false</InstallToAvailablePartition>
+                </OSImage>
+            </ImageInstall>
+            <UpgradeData>
+                <Upgrade>false</Upgrade>
+            </UpgradeData>
+            <Display>
+                <ColorDepth>32</ColorDepth>
+                <HorizontalResolution>1280</HorizontalResolution>
+                <VerticalResolution>720</VerticalResolution>
+            </Display>
+            <ComplianceCheck>
+                <DisplayReport>OnError</DisplayReport>
+            </ComplianceCheck>
+            <Diagnostics>
+                <OptIn>true</OptIn>
+            </Diagnostics>
+            <UserData>
+                <AcceptEula>true</AcceptEula>
+                <!--
+                   <ProductKey>
+                   <Key>XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</Key>
+                   <WillShowUI>OnError</WillShowUI>
+                   </ProductKey>
+                -->
+            </UserData>
+            <DiskConfiguration>
+                <Disk wcm:action="add">
+                    <CreatePartitions>
+                        <CreatePartition wcm:action="add">
+                            <Extend>false</Extend>
+                            <Order>1</Order>
+                            <Size>35840</Size>
+                            <Type>Primary</Type>
+                        </CreatePartition>
+                        <CreatePartition wcm:action="add">
+                            <Extend>true</Extend>
+                            <Order>2</Order>
+                            <Type>Primary</Type>
+                        </CreatePartition>
+                    </CreatePartitions>
+                    <ModifyPartitions>
+                        <ModifyPartition wcm:action="add">
+                            <Active>true</Active>
+                            <Extend>false</Extend>
+                            <Format>NTFS</Format>
+                            <Label>OS</Label>
+                            <Letter>C</Letter>
+                            <Order>1</Order>
+                            <PartitionID>1</PartitionID>
+                        </ModifyPartition>
+                        <ModifyPartition wcm:action="add">
+                            <Active>true</Active>
+                            <Extend>false</Extend>
+                            <Format>NTFS</Format>
+                            <Label>Data</Label>
+                            <Letter>D</Letter>
+                            <Order>2</Order>
+                            <PartitionID>2</PartitionID>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                </Disk>
+            </DiskConfiguration>
+            <DynamicUpdate>
+               <Enable>true</Enable>
+                <WillShowUI>OnError</WillShowUI>
+            </DynamicUpdate>
+            <EnableFirewall>false</EnableFirewall>
+            <EnableNetwork>false</EnableNetwork>
+        </component>
+        <component name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+           <DriverPaths>
+              <PathAndCredentials wcm:keyValue="1" wcm:action="add">
+                 <Credentials>
+                    <Domain>.</Domain> 
+                    <Password>rootroot</Password> 
+                    <Username>Administrator</Username> 
+                 </Credentials>
+                 <Path>\Drivers</Path> 
+              </PathAndCredentials>
+           </DriverPaths>
+        </component>
+        <component name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+           <DriverPaths>
+              <PathAndCredentials wcm:keyValue="1" wcm:action="add">
+                 <Credentials>
+                    <Domain>.</Domain> 
+                    <Password>rootroot</Password> 
+                    <Username>Administrator</Username> 
+                 </Credentials>
+                 <Path>\Drivers</Path> 
+              </PathAndCredentials>
+           </DriverPaths>
+        </component>
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SetupUILanguage>
+                <UILanguage>en-US</UILanguage>
+            </SetupUILanguage>
+            <InputLocale>0409:00000409</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+        </component>
+    </settings>
+    <settings pass="specialize">
+        <component name="Networking-MPSSVC-Svc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FirewallGroups>
+                <FirewallGroup wcm:action="add" wcm:keyValue="RemoteDesktop">
+                    <Profile>all</Profile>
+                    <Active>true</Active>
+                    <Group>Remote Desktop</Group>
+                </FirewallGroup>
+            </FirewallGroups>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <fDenyTSConnections>false</fDenyTSConnections>
+        </component>
+        <component name="Microsoft-Windows-OutOfBoxExperience" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DoNotOpenInitialConfigurationTasksAtLogon>true</DoNotOpenInitialConfigurationTasksAtLogon>
+        </component>
+        <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="wow64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SkipAutoActivation>true</SkipAutoActivation>
+        </component>
+        <component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+            <Identification>
+                <JoinWorkgroup>kpCloud</JoinWorkgroup>
+            </Identification>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+            <ComputerName>kpCloudSystem</ComputerName>
+            <RegisteredOrganization>kpCloud</RegisteredOrganization>
+            <RegisteredOwner>kpCloud</RegisteredOwner>
+            <TimeZone>Eastern Standard Time</TimeZone>
+            <DoNotCleanTaskBar>true</DoNotCleanTaskBar>
+            <ShowWindowsLive>false</ShowWindowsLive>
+            <Display>
+               <ColorDepth>32</ColorDepth>
+               <DPI>120</DPI>
+               <HorizontalResolution>1280</HorizontalResolution>
+               <VerticalResolution>720</VerticalResolution>
+            </Display>
+        </component>
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>0409:00000409</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FilterLevel>High</FilterLevel>
+            <PlaySound>true</PlaySound>
+            <ShowInformationBar>true</ShowInformationBar>
+            <DisableAccelerators>true</DisableAccelerators>
+            <DisableDevTools>true</DisableDevTools>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <DisableOOBAccelerators>true</DisableOOBAccelerators>
+            <EnableLinksBar>true</EnableLinksBar>
+            <FavoritesDelete>true</FavoritesDelete>
+            <FavoritesOnTop>true</FavoritesOnTop>
+            <NoDial>true</NoDial>
+            <ShowLeftAddressToolbar>true</ShowLeftAddressToolbar>
+            <ShowMenuBar>true</ShowMenuBar>
+            <Home_Page>http://www.google.com</Home_Page>
+ 	    <SearchScopes>
+ 		<Scope wcm:action="add">
+      		<ScopeDefault>true</ScopeDefault>
+                <ScopeDisplayName>Google</ScopeDisplayName>
+                <ScopeKey>SearchProvider1</ScopeKey>
+                <ScopeUrl>http://www.google.com/search?q={searchTerms}</ScopeUrl>
+                </Scope>
+            </SearchScopes>
+        </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FilterLevel>High</FilterLevel>
+            <PlaySound>false</PlaySound>
+            <ShowInformationBar>false</ShowInformationBar>
+            <DisableAccelerators>true</DisableAccelerators>
+            <DisableDevTools>true</DisableDevTools>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <DisableOOBAccelerators>true</DisableOOBAccelerators>
+            <Home_Page>http://www.google.com</Home_Page>
+ 	    <SearchScopes>
+ 		<Scope wcm:action="add">
+      		<ScopeDefault>true</ScopeDefault>
+                <ScopeDisplayName>Google</ScopeDisplayName>
+                <ScopeKey>SearchProvider1</ScopeKey>
+                <ScopeUrl>http://www.google.com/search?q={searchTerms}</ScopeUrl>
+                </Scope>
+            </SearchScopes>
+         </component>
+        <component name="Microsoft-Windows-ErrorReportingCore" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableWER>0</DisableWER>
+        </component>
+        <component name="Microsoft-Windows-ErrorReportingCore" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableWER>0</DisableWER>
+        </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="wow64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableAccelerators>true</DisableAccelerators>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <DisableOOBAccelerators>true</DisableOOBAccelerators>
+            <FavoritesDelete>true</FavoritesDelete>
+            <FavoritesOnTop>true</FavoritesOnTop>
+            <IEWelcomeMsg>false</IEWelcomeMsg>
+            <NoDial>true</NoDial>
+            <ShowInformationBar>true</ShowInformationBar>
+            <ShowLeftAddressToolbar>true</ShowLeftAddressToolbar>
+            <ShowMenuBar>true</ShowMenuBar>
+        </component>
+    </settings>
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Description>Password never expires</Description>
+                    <CommandLine>cmd /C wmic useraccount where "name='Administrator'" set PasswordExpires=FALSE</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>2</Order>
+                    <Description>Run firstboot bootstrap script</Description>
+                    <CommandLine>START "Notice:" /wait cmd /C "ECHO Running kpCloud Windows build system ... Please wait! &amp; pause"</CommandLine>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>rootroot</Value>
+                    <PlainText>true</PlainText>
+                </AdministratorPassword>
+                <LocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Name>Administrator</Name>
+                        <Description>Administrator</Description>
+                        <DisplayName>Administrator</DisplayName>
+                        <Group>Administrators</Group>
+                    </LocalAccount>
+                    <LocalAccount wcm:action="add">
+                       <Password>
+                          <Value>kpapp</Value>
+                          <PlainText>true</PlainText>
+                       </Password>
+                       <Description>kpCloud Application Shadow Account</Description>
+                       <DisplayName>kpapp</DisplayName>
+                       <Group>Administrators;Power Users</Group>
+                       <Name>kpapp</Name>
+                    </LocalAccount>
+                </LocalAccounts>
+            </UserAccounts>
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <NetworkLocation>Work</NetworkLocation>
+                <!--
+                     ProtectYourPC:
+                     1 Specifies the recommended level of protection for your computer.
+                     2 Specifies that only updates are installed.
+                     3 Specifies that automatic protection is disabled.
+                -->
+                <ProtectYourPC>1</ProtectYourPC>
+                <SkipMachineOOBE>true</SkipMachineOOBE>
+                <SkipUserOOBE>true</SkipUserOOBE>
+            </OOBE>
+            <Display>
+                <ColorDepth>32</ColorDepth>
+                <HorizontalResolution>1280</HorizontalResolution>
+                <VerticalResolution>720</VerticalResolution>
+            </Display>
+            <RegisteredOrganization>kpCloud</RegisteredOrganization>
+            <RegisteredOwner>kpCloud</RegisteredOwner>
+            <TimeZone>Eastern Standard Time</TimeZone>
+            <AutoLogon>
+                <Username>Administrator</Username>
+                <Password>
+                    <Value>rootroot</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Domain>.</Domain>
+                <Enabled>true</Enabled>
+                <LogonCount>2</LogonCount>
+            </AutoLogon>
+            <OEMInformation>
+               <HelpCustomized>true</HelpCustomized>
+               <Manufacturer>kpCloud</Manufacturer>
+               <Model>kpCloud Built System</Model>
+               <Logo></Logo>
+               <SupportHours>Self Supported System</SupportHours>
+               <SupportPhone>Ext XXXXX</SupportPhone>
+               <SupportURL>https://support.kpcloud.org</SupportURL>
+            </OEMInformation>
+            <WindowsFeatures>
+               <ShowInternetExplorer>true</ShowInternetExplorer>
+               <ShowMediaCenter>false</ShowMediaCenter>
+               <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+               <ShowWindowsMail>false</ShowWindowsMail>
+            </WindowsFeatures>
+        </component>
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>0409:00000409</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+        </component>
+    </settings>
+    <settings pass="offlineServicing">
+       <component name="Microsoft-Windows-PnpCustomizationsNonWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <DriverPaths>
+             <PathAndCredentials wcm:keyValue="1" wcm:action="add">
+                <Path>\Drivers</Path>
+             </PathAndCredentials>
+          </DriverPaths>
+       </component>
+    </settings>
+    <settings pass="auditSystem">
+       <component name="Microsoft-Windows-PnpCustomizationsNonWinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <DriverPaths>
+             <PathAndCredentials wcm:keyValue="1" wcm:action="add">
+                <Path>\Drivers</Path>
+             </PathAndCredentials>
+          </DriverPaths>
+       </component>
+    </settings>
+</unattend>
