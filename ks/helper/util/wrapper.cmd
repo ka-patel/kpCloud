@@ -105,7 +105,7 @@ IF NOT EXIST %scriptList% (
   IF NOT EXIST z:\ks (
     ECHO.Attaching to Windows share for kpCloud build framework source ...
     IF EXIST z:\* NET USE /d z:
-    NET USE z: \\%ksServer%\kickstart
+    NET USE z: \\%ksServer%\kpCloud
   ) ELSE (
     ECHO.
   )

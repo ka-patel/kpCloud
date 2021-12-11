@@ -24,7 +24,7 @@ IF NOT EXIST %scriptList% (
   IF NOT EXIST z:\ks (
     ECHO Attaching to Windows share for build process ...
     IF EXIST z:\* NET USE /d z:
-    NET USE z: \\%ksServer%\kickstart
+    NET USE z: \\%ksServer%\kpCloud
   )
 
   ECHO Scripts order to run:
