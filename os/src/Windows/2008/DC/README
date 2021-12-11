@@ -8,7 +8,7 @@
 #-##
 #-##      OR
 #-##
-#-##  add following stanza into /etc/fstab followed by 'mount -a' in order to survice reboots as well:
+#-##  add following stanza into /etc/fstab followed by 'mount -a' in order to survive reboots as well:
 #-##      /home/kpCloud/os/iso/<iso.name>.iso	/home/kpCloud/os/src/Windows/2008/DC	udf	loop	0 0
 #-##
 #-##
